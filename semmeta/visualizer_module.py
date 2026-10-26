@@ -37,7 +37,10 @@ class SEMVisualizer:
         """
 
         # TODO (Task 3): implement this method
-        raise NotImplementedError("load_metadata is not implemented yet")       
+        with open(self.json_path, 'r') as f:
+            self.metatdata = json.load(f)
+        
+        # raise NotImplementedError("load_metadata is not implemented yet")       
 
 
     def clean_value(self, raw_value, variable_name=None):
@@ -84,7 +87,16 @@ class SEMVisualizer:
         """
 
         # TODO (Task 3): implement this method
-        raise NotImplementedError("extract_variables is not implemented yet")
+        
+        meta_list = []
+        
+        for var in self.variables:
+            value = self.clean_value(self.metadata, var)
+            meta_list.append((var, value[0], value[1]))
+            
+        return meta_list
+            
+        # raise NotImplementedError("extract_variables is not implemented yet")
 
 
 
@@ -103,7 +115,19 @@ class SEMVisualizer:
         """
 
         # TODO (Task 3): implement this method
-        raise NotImplementedError("show_image_with_table is not implemented yet")    
+        column = ['Variable', 'Value', 'Unit']
+        
+        self.load_metadata()
+        
+        meta_table = self.extract_variables()
+        
+        with Image.open(self.image_path) as im_sem:
+            fig axs = plt.subplots(2,1)
+            axs[0].imshow(im_sem, cmap='gray', vmin=0, vmax=256)
+            axs[1].table(colLabels=columns, cellText=meta_table)
+            plt.show()
+        
+        #raise NotImplementedError("show_image_with_table is not implemented yet")    
         
 
  
