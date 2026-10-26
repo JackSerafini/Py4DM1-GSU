@@ -1,4 +1,4 @@
-# Written by ahmed khalil ahmed.khalil@areasciencepark.it
+pu# Written by ahmed khalil ahmed.khalil@areasciencepark.it
 #
 # Import PIL image module for reading TIFF metadata
 from PIL import Image
