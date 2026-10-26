@@ -19,12 +19,14 @@ class JsonCleaner:
         """
         Reads a JSON file and returns its content as a Python dict.
         """
+        # raise NotImplementedError("load_json is not implemented yet")
+        with open(jsfile) as json_data:
+            data = json.load(json_data)
 
-        # TODO (Task 2): implement this method
-        raise NotImplementedError("load_json is not implemented yet")
+        return data
 
 
-    def clean_value(self, value):
+    def clean_value(self, value: str):
         """
         Extracts the numeric value and its unit from a string.
 
@@ -42,7 +44,6 @@ class JsonCleaner:
             "<number> <unit>" (one space) if a number followed by a unit
             is found, otherwise value unchanged.
         """
-
         # Keep only the part after the first '=' (the parameter name is ignored)
         if "=" in value:
             value_part = value.split("=", 1)[1].strip()
@@ -62,7 +63,7 @@ class JsonCleaner:
         return value    
 
 
-    def clean_dict(self, data):
+    def clean_dict(self, data: dict):
         """
         Cleans a metadata dictionary.
 
@@ -76,10 +77,14 @@ class JsonCleaner:
         Returns:
             a new dictionary with the cleaned entries
         """
-        
-        # TODO (Task 2): implement this method
-        raise NotImplementedError("clean_dict is not implemented yet")
+        # raise NotImplementedError("clean_dict is not implemented yet")
+        cleaned = {}
 
+        for key, value in data.items():
+            if value is not None:
+                cleaned[key] = self.clean_value(str(value))
+
+        return cleaned
 
 
     def process(self, jsfile):
@@ -95,9 +100,13 @@ class JsonCleaner:
 
         Returns:
             the cleaned metadata dictionary
-        """    
-        # TODO (Task 2): implement this method
-        raise NotImplementedError("process is not implemented yet")
+        """
+        # raise NotImplementedError("process is not implemented yet")
+        data = self.load_json(jsfile)
+
+        clean = self.clean_dict(data)
+        self.cleaned_data = clean
+        return self.cleaned_data
 
 
     def save_cleaned(self, output_path):
@@ -114,7 +123,7 @@ class JsonCleaner:
 
         Returns:
             None
-        """    
-    
-        # TODO (Task 2): implement this method
-        raise NotImplementedError("save_cleaned is not implemented yet")
+        """
+        # raise NotImplementedError("save_cleaned is not implemented yet")
+        with open(output_path, 'w') as file:
+            json.dump(self.cleaned_data, file, indent=2)
