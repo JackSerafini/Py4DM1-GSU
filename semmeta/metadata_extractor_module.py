@@ -1,4 +1,4 @@
-pu# Written by ahmed khalil ahmed.khalil@areasciencepark.it
+# Written by ahmed khalil ahmed.khalil@areasciencepark.it
 #
 # Import PIL image module for reading TIFF metadata
 from PIL import Image
@@ -29,6 +29,16 @@ class SEMMetaData:
             PIL Image object if successful
             False otherwise
         """
+        if not str(image).endswith(self.semext):
+            return False
+
+        try:
+            img = Image.open(image)
+            return img
+
+        except OSError:
+            print(f"[ERROR]: {image}")
+            return False
 
         # TODO (Task 1): implement this method
         raise NotImplementedError("OpenCheckImage is not implemented yet")       
@@ -193,6 +203,9 @@ class SEMMetaData:
             None
         """
 
+        with open(file, 'w') as f:
+            json.dump(semdict, f, indent=2)
+
         # TODO (Task 1): implement this method
         raise NotImplementedError("WriteSEMJson is not implemented yet")    
         
@@ -214,6 +227,7 @@ class SEMMetaData:
         Returns:
             None
         """
+
 
         # TODO (Task 1): implement this method
         raise NotImplementedError("WriteProcessingReport is not implemented yet")
