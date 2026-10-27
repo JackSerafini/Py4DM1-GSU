@@ -29,6 +29,16 @@ class SEMMetaData:
             PIL Image object if successful
             False otherwise
         """
+        if not str(image).endswith(self.semext):
+            return False
+
+        try:
+            img = Image.open(image)
+            return img
+
+        except OSError:
+            print(f"[ERROR]: {image}")
+            return False
 
         # TODO (Task 1): implement this method
         raise NotImplementedError("OpenCheckImage is not implemented yet")       
@@ -192,9 +202,14 @@ class SEMMetaData:
         Returns:
             None
         """
-
         # TODO (Task 1): implement this method
-        raise NotImplementedError("WriteSEMJson is not implemented yet")    
+
+        try:
+            with open(file, 'w') as f:
+                json.dump(semdict, f, indent=2)
+
+        except Exception:
+            raise NotImplementedError("WriteSEMJson is not implemented yet")
         
     def WriteProcessingReport(self, file, records):
         """
@@ -214,9 +229,24 @@ class SEMMetaData:
         Returns:
             None
         """
-
         # TODO (Task 1): implement this method
-        raise NotImplementedError("WriteProcessingReport is not implemented yet")
+
+        try:
+            with open(file, 'w') as f:
+                f.write("SEM IMAGE PROCESSING REPORT\n")
+                f.write("=" * 60 + "\n\n")
+                f.write(f"{'STATUS':<10} IMAGE\n")
+                f.write("-" * 60 + "\n")
+
+                for record in records:
+                    status = record["status"]
+                    image = record["image"]
+
+                    f.write(f"{status:<10} {image}\n")
+
+
+        except Exception:
+            raise NotImplementedError("WriteProcessingReport is not implemented yet")
 
  
  
