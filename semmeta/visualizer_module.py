@@ -122,9 +122,8 @@ class SEMVisualizer:
         meta_table = self.extract_variables()
         
         with Image.open(self.image_path) as im_sem:
-            fig axs = plt.subplots(2,1)
-            axs[0].imshow(im_sem, cmap='gray', vmin=0, vmax=256)
-            axs[1].table(colLabels=columns, cellText=meta_table)
+            plt.imshow(im_sem, cmap="gray")
+            plt.axis("off")
             plt.show()
         
         #raise NotImplementedError("show_image_with_table is not implemented yet")    
