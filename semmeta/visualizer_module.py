@@ -3,6 +3,7 @@
 # Import modules for file system operations (os), JSON parsing (json), 
 # and regular expressions -- regex (re)
 import os, json, re
+from pathlib import Path
 
 # Import PIL for image loading and matplotlib for visualization
 from PIL import Image
@@ -122,9 +123,29 @@ class SEMVisualizer:
         meta_table = self.extract_variables()
         
         with Image.open(self.image_path) as im_sem:
-            plt.imshow(im_sem, cmap="gray")
-            plt.axis("off")
-            plt.show()
+            
+            fig, (ax_img, ax_tab) = plt.subplots(2,1)
+            
+            #plotting the image on the top half
+            ax_img.imshow(im_sem, cmap="gray")
+            ax_img.axis("off")
+            
+            #displaying the table on the bottom half
+            ax_tab.axis("off")
+            table = ax_tab.table(
+                cellText=meta_table,
+                colLabels=column,
+                loc="center",
+                cellLoc="center"
+            )
+            table.auto_set_font_size(False)
+            table.set_fontsize(10)
+            table.scale(1, 1.5)
+            
+            #create the directory and save the image
+            out_dir = Path("output")
+            out_dir.mkdir(parents=True, exist_ok=True)
+            plt.savefig(out_dir / "image.png", dpi=150, bbox_inches="tight")
         
         #raise NotImplementedError("show_image_with_table is not implemented yet")    
         
