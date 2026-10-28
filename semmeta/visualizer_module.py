@@ -117,6 +117,8 @@ class SEMVisualizer:
 
         # TODO (Task 3): implement this method
         column = ['Variable', 'Value', 'Unit']
+
+	image_name = Path(self.image_path).with_suffix(".png").name
         
         self.load_metadata()
         
@@ -145,7 +147,7 @@ class SEMVisualizer:
             #create the directory and save the image
             out_dir = Path("output")
             out_dir.mkdir(parents=True, exist_ok=True)
-            plt.savefig(out_dir / "image.png", dpi=150, bbox_inches="tight")
+            plt.savefig(out_dir / image_name, dpi=150, bbox_inches="tight")
         
         #raise NotImplementedError("show_image_with_table is not implemented yet")    
         
